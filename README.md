@@ -4,6 +4,11 @@
 
 > 这是独立制作的概念性设计与技术演示，并非拓尔思官方发布版本。公司事实、产品名称与跳转链接来自 [拓尔思官方网站](https://www.trs.com.cn/)，品牌权利归原权利人所有。
 
+## 在线体验
+
+- [在线预览](https://trs-future-site.kemo64.chatgpt.site/)：当前为站点所有者可访问版本
+- [GitHub 开源仓库](https://github.com/oukeming64-tech/trs-future-site)
+
 ## 已实现
 
 - 实时 3D 语义核心：数据、知识、模型、智能体四层轨道，支持鼠标响应与滚动联动
