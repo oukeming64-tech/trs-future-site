@@ -12,6 +12,7 @@
 
 ## 维护入口
 
+- 给领导及其 Codex：[领导一页说明](./LEADER-BRIEF.md)，用简明口径说明仓库价值、使用方式、决策事项和上线边界。
 - 给设计、内容和普通维护者：[中文维护指南](./docs/EDITING-GUIDE.md)，按“想改什么”直接找到文件与检查方法。
 - 给部门负责人和官网运维：[终稿会签、下载与替换指南](./docs/PRODUCTION-HANDOFF.md)，包含会签表、终稿冻结、下载、预发布、正式切换和回滚。
 - 给 Codex、Claude 等自动化 Agent：[AGENTS.md](./AGENTS.md)，包含模块所有权、不可破坏的边界、必跑检查和文档同步规则。
@@ -66,6 +67,7 @@ npm audit
 
 ```text
 AGENTS.md                     # Agent 改动协议与模块地图
+LEADER-BRIEF.md               # 给领导和领导 Codex 的一页说明
 .github/workflows/
 ├── pages.yml                 # GitHub Pages 预览自动发布
 └── handoff.yml               # 会签后手动生成正式官网终稿包
@@ -97,7 +99,7 @@ scripts/
 - 改某个产品或行业的微型 3D 原型：在 `site-content.ts` 调整 `visual`，并在 `app/components/visuals/mini-3d-blueprints.ts` 修改对应蓝图
 - 调整颜色、排版和断点：编辑 `app/globals.css` 顶部变量与对应分区
 
-完整改法见 [docs/EDITING-GUIDE.md](./docs/EDITING-GUIDE.md)，终稿交付见 [docs/PRODUCTION-HANDOFF.md](./docs/PRODUCTION-HANDOFF.md)，Agent 约束见 [AGENTS.md](./AGENTS.md)，架构与扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。中科闻歌竞品差异、吸收与舍弃项见 [docs/COMPETITOR-FUSION.md](./docs/COMPETITOR-FUSION.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
+领导汇报口径见 [LEADER-BRIEF.md](./LEADER-BRIEF.md)，完整改法见 [docs/EDITING-GUIDE.md](./docs/EDITING-GUIDE.md)，终稿交付见 [docs/PRODUCTION-HANDOFF.md](./docs/PRODUCTION-HANDOFF.md)，Agent 约束见 [AGENTS.md](./AGENTS.md)，架构与扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。中科闻歌竞品差异、吸收与舍弃项见 [docs/COMPETITOR-FUSION.md](./docs/COMPETITOR-FUSION.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
 
 `main` 分支的每次更新都会通过 `.github/workflows/pages.yml` 重新构建 GitHub Pages 预览。各部门会签并冻结终稿后，维护者再手动运行 `.github/workflows/handoff.yml`，下载带版本清单和校验值的正式官网终稿包。基线检查为：两个部署目标静态导出成功、代码检查通过、3 项页面/架构/交付测试通过、依赖审计为 0 项已知漏洞。
 
