@@ -16,7 +16,9 @@ page.tsx
   ├─ mini-3d.css               微型 3D 几何与动画语言
   └─ layout.tsx                静态元信息与页面外壳
 next.config.ts                 静态导出与 GitHub Pages 子路径
-.github/workflows/pages.yml    自动构建和公开发布
+.github/workflows/pages.yml    自动构建和公开预览
+.github/workflows/handoff.yml  人工会签后生成正式官网终稿包
+scripts/*handoff*.mjs          终稿清单、目录隔离与完整性校验
 ```
 
 ### 1. 内容层：`app/data/site-content.ts`
@@ -105,12 +107,22 @@ static HTML + interactive client islands
 ## 构建与发布
 
 - `npm run dev` 使用 Next.js 本地开发服务，默认运行在站点根路径。
-- `npm run build` 生成普通静态导出；`npm run build:pages` 以 `/trs-future-site/` 为基础路径生成 GitHub Pages 产物。
+- `npm run build` 生成普通静态导出；`npm run build:pages` 以 `/trs-future-site/` 为基础路径生成 GitHub Pages 预览产物。
+- `npm run package:handoff` 生成官网根路径产物，把正式域名写入元数据，并封装为 `handoff-package/site/`、随包指南、版本清单和 SHA-256 校验值。
 - `next.config.ts` 在 Pages 构建时写入 `NEXT_PUBLIC_BASE_PATH`，供 Logo 等 `public/` 资源使用。
-- `.github/workflows/pages.yml` 监听 `main`，安装依赖、生成 `out/`、上传静态产物并部署 GitHub Pages。
-- 正式地址为 `https://oukeming64-tech.github.io/trs-future-site/`。仓库不再保留 Sites、vinext Worker 或 Cloudflare 运行时配置。
+- `app/layout.tsx` 从 `SITE_URL` 读取目标站点地址；未设置时使用 GitHub Pages 预览地址，终稿构建则显式写入正式域名。
+- `.github/workflows/pages.yml` 监听 `main`，安装依赖、生成 `out/`、上传静态产物并部署 GitHub Pages 预览。
+- `.github/workflows/handoff.yml` 仅允许人工触发。它验证两种构建目标后上传终稿包，但不接触正式服务器。
+- 仓库不再保留 Sites、vinext Worker 或 Cloudflare 运行时配置。
 
-发布链只有一个方向：源代码 → Next.js 静态导出 → GitHub Pages artifact → 正式站点。`out/` 是生成物，不提交到 Git。
+交付链分为两条，避免预览路径污染正式官网：
+
+```text
+main → Pages 子路径构建 → GitHub Pages 公开预览 → 部门会签
+批准的 main → 官网根路径构建 → 终稿包 → 预发布验收 → 人工切换 www.trs.com.cn
+```
+
+`out/` 和 `handoff-package/` 都是生成物，不提交到 Git。终稿包中的 `site/` 只放可部署网页，指南、清单和校验值留在包根目录，防止交接资料被误上传为公开页面。
 
 ## 性能与可访问性
 

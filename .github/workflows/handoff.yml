@@ -1,0 +1,49 @@
+name: Build production handoff
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_label:
+        description: Approved final label, for example v1.3.1-final
+        required: true
+        default: final
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    env:
+      HANDOFF_LABEL: ${{ inputs.release_label }}
+      SITE_URL: https://www.trs.com.cn/
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check source
+        run: npm run lint
+
+      - name: Build and verify both deployment targets
+        run: npm test
+
+      - name: Audit dependencies
+        run: npm audit
+
+      - name: Upload production website package
+        uses: actions/upload-artifact@v7
+        with:
+          name: trs-website-production-${{ inputs.release_label }}-${{ github.sha }}
+          path: handoff-package
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 9

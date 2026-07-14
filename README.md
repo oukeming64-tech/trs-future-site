@@ -6,13 +6,14 @@
 
 ## 在线体验
 
-- [在线预览](https://oukeming64-tech.github.io/trs-future-site/)：由 GitHub Pages 公开托管，主分支更新后自动发布
+- [在线预览](https://oukeming64-tech.github.io/trs-future-site/)：由 GitHub Pages 公开托管，供修改与部门会签使用
 - [GitHub 开源仓库](https://github.com/oukeming64-tech/trs-future-site)
 - [v1.1.0 首版解说视频](https://github.com/oukeming64-tech/trs-future-site/releases/download/v1.1.0/trs-future-site-first-cut.mp4)：55.83 秒，1080p / 30fps，含中文旁白、字幕与原创电子配乐
 
 ## 维护入口
 
 - 给设计、内容和普通维护者：[中文维护指南](./docs/EDITING-GUIDE.md)，按“想改什么”直接找到文件与检查方法。
+- 给部门负责人和官网运维：[终稿会签、下载与替换指南](./docs/PRODUCTION-HANDOFF.md)，包含会签表、终稿冻结、下载、预发布、正式切换和回滚。
 - 给 Codex、Claude 等自动化 Agent：[AGENTS.md](./AGENTS.md)，包含模块所有权、不可破坏的边界、必跑检查和文档同步规则。
 - 需要理解分层原因时阅读：[ARCHITECTURE.md](./ARCHITECTURE.md)。
 
@@ -29,7 +30,7 @@
 - 官方证据入口：产品文档、生态体系与法定披露可从主内容区继续核验
 - 桌面与移动端响应式布局、移动全屏导航、键盘焦点与减少动态效果支持
 - 官方产品、方案、资讯、文档和投资者关系外链
-- Next.js 静态导出、GitHub Pages 自动发布与静态资源路径完整性测试
+- Next.js 静态导出、GitHub Pages 预览自动发布、正式官网终稿封装与双目标资源路径测试
 
 ## 技术栈
 
@@ -55,6 +56,7 @@ npm run dev
 ```bash
 npm run build
 npm run build:pages
+npm run package:handoff
 npm run lint
 npm test
 npm audit
@@ -63,8 +65,10 @@ npm audit
 ## 目录职责
 
 ```text
-AGENTS.md                   # Agent 改动协议与模块地图
-.github/workflows/pages.yml # GitHub Pages 自动发布
+AGENTS.md                     # Agent 改动协议与模块地图
+.github/workflows/
+├── pages.yml                 # GitHub Pages 预览自动发布
+└── handoff.yml               # 会签后手动生成正式官网终稿包
 app/
 ├── components/
 │   ├── sections/       # 页面功能区块；一个文件负责一个官网模块
@@ -78,7 +82,11 @@ app/
 ├── layout.tsx          # SEO、语言和页面级元信息
 └── page.tsx            # 只负责编排区块，不承载业务细节
 docs/
-└── EDITING-GUIDE.md     # 给人的中文维护指南
+├── EDITING-GUIDE.md           # 给人的中文维护指南
+└── PRODUCTION-HANDOFF.md      # 部门会签、终稿下载、上线与回滚
+scripts/
+├── write-handoff-manifest.mjs # 生成可追溯的终稿清单
+└── assemble-handoff-package.mjs # 分离站点文件与交接资料
 ```
 
 最常见的后续改动都集中在一处：
@@ -89,9 +97,11 @@ docs/
 - 改某个产品或行业的微型 3D 原型：在 `site-content.ts` 调整 `visual`，并在 `app/components/visuals/mini-3d-blueprints.ts` 修改对应蓝图
 - 调整颜色、排版和断点：编辑 `app/globals.css` 顶部变量与对应分区
 
-完整改法见 [docs/EDITING-GUIDE.md](./docs/EDITING-GUIDE.md)，Agent 约束见 [AGENTS.md](./AGENTS.md)，架构与扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。中科闻歌竞品差异、吸收与舍弃项见 [docs/COMPETITOR-FUSION.md](./docs/COMPETITOR-FUSION.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
+完整改法见 [docs/EDITING-GUIDE.md](./docs/EDITING-GUIDE.md)，终稿交付见 [docs/PRODUCTION-HANDOFF.md](./docs/PRODUCTION-HANDOFF.md)，Agent 约束见 [AGENTS.md](./AGENTS.md)，架构与扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。中科闻歌竞品差异、吸收与舍弃项见 [docs/COMPETITOR-FUSION.md](./docs/COMPETITOR-FUSION.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
 
-`main` 分支的每次更新都会通过 `.github/workflows/pages.yml` 重新构建并发布 GitHub Pages。发布前的基线检查为：静态导出成功、代码检查通过、2 项静态页面与架构测试通过、依赖审计为 0 项已知漏洞。
+`main` 分支的每次更新都会通过 `.github/workflows/pages.yml` 重新构建 GitHub Pages 预览。各部门会签并冻结终稿后，维护者再手动运行 `.github/workflows/handoff.yml`，下载带版本清单和校验值的正式官网终稿包。基线检查为：两个部署目标静态导出成功、代码检查通过、3 项页面/架构/交付测试通过、依赖审计为 0 项已知漏洞。
+
+GitHub Pages 预览不是当前官网的自动替代品，工作流也不会操作 `www.trs.com.cn`。正式替换必须先按交接指南完成备份、预发布验收和回滚准备，再由官网运维执行。
 
 ## 内容与品牌说明
 
