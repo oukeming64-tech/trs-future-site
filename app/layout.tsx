@@ -5,7 +5,12 @@ import "./mini-3d.css";
 const title = "拓尔思 TRS｜让数据成为可行动的智能";
 const description =
   "拓尔思概念官网焕新：以数据、知识、模型与行业智能体，连接大数据、人工智能、数据安全和云服务的全栈能力。";
-const siteUrl = "https://oukeming64-tech.github.io/trs-future-site/";
+const configuredSiteUrl =
+  process.env.SITE_URL ??
+  "https://oukeming64-tech.github.io/trs-future-site/";
+const siteUrl = configuredSiteUrl.endsWith("/")
+  ? configuredSiteUrl
+  : `${configuredSiteUrl}/`;
 const socialImage = new URL("og.png", siteUrl).toString();
 
 export const metadata: Metadata = {

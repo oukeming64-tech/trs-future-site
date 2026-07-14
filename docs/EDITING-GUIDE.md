@@ -18,9 +18,10 @@
 | 35 套小型 3D 原型 | `app/components/visuals/mini-3d-blueprints.ts` | 每个产品、行业和链路模型的几何蓝图 |
 | 小型 3D 渲染规则 | `app/components/visuals/Mini3DScene.tsx`、`app/mini-3d.css` | 通用渲染器、透视、原语和动效 |
 | 颜色、排版、布局和手机断点 | `app/globals.css` | 全局视觉变量和各模块样式 |
-| 页面标题、分享卡片、站点地址 | `app/layout.tsx` | SEO 与 GitHub Pages 正式地址 |
+| 页面标题、分享卡片、站点地址 | `app/layout.tsx` | SEO 与按构建目标切换的站点地址 |
 | GitHub Pages 构建路径 | `next.config.ts` | 静态导出和 `/trs-future-site` 子路径 |
-| 自动发布 | `.github/workflows/pages.yml` | 主分支更新后构建并发布 |
+| 预览站自动发布 | `.github/workflows/pages.yml` | 主分支更新后构建并发布 GitHub Pages 预览 |
+| 终稿下载与替换官网 | `docs/PRODUCTION-HANDOFF.md`、`.github/workflows/handoff.yml` | 部门会签、终稿冻结、下载、上线和回滚 |
 
 ## 常见改法
 
@@ -66,18 +67,21 @@ npm test
 npm audit
 ```
 
-`npm test` 会用 GitHub Pages 的真实子路径生成静态站，并检查 HTML、Logo、CSS、JavaScript 等本地资源是否都能找到。
+`npm test` 会分别生成 GitHub Pages 子路径预览版和官网根路径终稿版，检查 HTML、Logo、CSS、JavaScript、3D 映射、终稿清单和交付结构。
 
 ## 发布方式
 
-正式站点是 <https://oukeming64-tech.github.io/trs-future-site/>。
+公开预览站是 <https://oukeming64-tech.github.io/trs-future-site/>。
 
 合并到 `main` 后，GitHub Actions 会自动执行 `npm run build:pages`，上传 `out/` 并更新 GitHub Pages。不要手工提交 `out/`，也不要再使用旧的 Sites 配置发布正式版本。
 
 如果发布失败，先查看仓库 Actions 中的 `Deploy GitHub Pages`，确认失败发生在安装、静态构建、上传还是部署阶段；修复源文件后重新运行，不直接改线上产物。
 
+GitHub Pages 只用于会签预览，不能直接覆盖 `www.trs.com.cn`。各部门确认终稿后，按 [官网终稿会签、下载与替换指南](./PRODUCTION-HANDOFF.md) 手动生成正式官网终稿包，再由官网运维在备份和预发布验收完成后上线。
+
 ## 修改完成后同步什么
 
 - 用户能看到的功能或文案变化：更新 README 或内容来源文档。
 - 模块职责、目录或发布方式变化：更新 `ARCHITECTURE.md`、本指南和 `AGENTS.md`。
+- 会签、终稿下载、现网上线或回滚流程变化：更新 `docs/PRODUCTION-HANDOFF.md` 和交付工作流。
 - 已形成版本的改动：在 `CHANGELOG.md` 顶部追加版本记录，不改写旧版本历史。

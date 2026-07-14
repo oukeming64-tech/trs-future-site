@@ -15,6 +15,10 @@ test("exports the TRS concept site for GitHub Pages", async () => {
   assert.match(html, /业务结果/);
   assert.match(html, /FACT CHECK \/ PRIMARY SOURCES/);
   assert.match(html, /2026\.07\.07/);
+  assert.match(
+    html,
+    /https:\/\/oukeming64-tech\.github\.io\/trs-future-site\//,
+  );
   assert.match(html, /\/trs-future-site\/_next\/static\//);
   assert.match(html, /\/trs-future-site\/trs-logo\.png/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
