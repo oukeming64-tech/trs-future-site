@@ -8,6 +8,7 @@
 
 - [在线预览](https://trs-future-site.kemo64.chatgpt.site/)：当前为站点所有者可访问版本
 - [GitHub 开源仓库](https://github.com/oukeming64-tech/trs-future-site)
+- [v1.1.0 首版解说视频](https://github.com/oukeming64-tech/trs-future-site/releases/download/v1.1.0/trs-future-site-first-cut.mp4)：55.83 秒，1080p / 30fps，含中文旁白、字幕与原创电子配乐
 
 ## 已实现
 
@@ -74,7 +75,7 @@ app/
 - 改某个产品或行业的微型 3D 原型：在 `site-content.ts` 调整 `visual`，并在 `app/components/visuals/mini-3d-blueprints.ts` 修改对应蓝图
 - 调整颜色、排版和断点：编辑 `app/globals.css` 顶部变量与对应分区
 
-完整边界和扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。
+完整边界和扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
 
 发布前的基线检查为：构建成功、代码检查通过、2 项服务端渲染与架构测试通过、依赖审计为 0 项已知漏洞。
 
