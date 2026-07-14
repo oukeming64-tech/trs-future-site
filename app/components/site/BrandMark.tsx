@@ -1,15 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
+
 export function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <span className={`brand-mark${compact ? " brand-mark--compact" : ""}`}>
-      <span className="brand-mark__symbol" aria-hidden="true">
-        <span>T</span>
-        <span>R</span>
-        <span>S</span>
-      </span>
-      <span className="brand-mark__copy">
-        <strong>拓尔思</strong>
-        {!compact && <small>DATA + INTELLIGENCE</small>}
-      </span>
+      <img
+        className="brand-mark__image"
+        src="/trs-logo.png"
+        alt="拓尔思 TRS"
+        width={147}
+        height={36}
+        loading="eager"
+      />
     </span>
   );
 }

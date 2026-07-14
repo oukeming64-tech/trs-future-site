@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
+import "./mini-3d.css";
 
 const title = "拓尔思 TRS｜让数据成为可行动的智能";
 const description =

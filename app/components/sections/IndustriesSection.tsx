@@ -2,6 +2,17 @@ import { ArrowUpRight } from "lucide-react";
 import { industries } from "../../data/site-content";
 import { Reveal } from "../site/Reveal";
 import { SectionHeading } from "../site/SectionHeading";
+import { Mini3DScene } from "../visuals/Mini3DScene";
+
+const industryAccents = [
+  "#5ee7ff",
+  "#a6f0bd",
+  "#6e8fff",
+  "#ff8257",
+  "#7dd3fc",
+  "#c4b5fd",
+  "#f5d48f",
+] as const;
 
 export function IndustriesSection() {
   return (
@@ -38,8 +49,11 @@ export function IndustriesSection() {
                   </div>
                   <div className="industry-card__visual" aria-hidden="true">
                     <span>{industry.metric}</span>
-                    <i />
-                    <b />
+                    <Mini3DScene
+                      model={industry.visual}
+                      label={industry.name}
+                      accent={industryAccents[index]}
+                    />
                   </div>
                   <div className="industry-card__copy">
                     <small>{industry.tagline}</small>

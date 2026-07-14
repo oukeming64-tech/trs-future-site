@@ -3,6 +3,7 @@
 import { ArrowUpRight, MoveRight } from "lucide-react";
 import { useState } from "react";
 import { productCategories } from "../../data/site-content";
+import { Mini3DScene } from "../visuals/Mini3DScene";
 
 export function ProductExplorer() {
   const [activeId, setActiveId] = useState(productCategories[0].id);
@@ -91,6 +92,11 @@ export function ProductExplorer() {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span className="product-card__tag">{product.tag}</span>
+              <Mini3DScene
+                model={product.visual}
+                label={product.name}
+                accent={active.accent}
+              />
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <span className="product-card__link">

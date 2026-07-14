@@ -1,0 +1,559 @@
+.mini-3d-scene {
+  --scene-accent: #5ee7ff;
+  position: relative;
+  width: 100%;
+  height: 176px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--scene-accent) 18%, transparent);
+  background:
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--scene-accent) 12%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(0, 0, 0, 0.08));
+  perspective: 720px;
+  transform-style: preserve-3d;
+  isolation: isolate;
+}
+
+.mini-3d-scene::before,
+.mini-3d-scene::after {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.mini-3d-scene::before {
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.035), transparent);
+  transform: translateX(-100%);
+  animation: mini-scene-sweep 6.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.mini-3d-scene::after {
+  inset: auto 10px 10px auto;
+  width: 38px;
+  height: 1px;
+  background: var(--scene-accent);
+  box-shadow: 0 0 14px var(--scene-accent);
+  opacity: 0.5;
+}
+
+.mini-3d-scene__grid,
+.mini-3d-scene__glow,
+.mini-3d-scene__scan,
+.mini-3d-scene__stage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.mini-3d-scene__grid {
+  z-index: 0;
+  inset: 38% -12% -48%;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--scene-accent) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--scene-accent) 10%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(ellipse at center, black, transparent 72%);
+  transform: rotateX(67deg) translateZ(-60px);
+  transform-origin: center top;
+}
+
+.mini-3d-scene__glow {
+  z-index: 0;
+  inset: 14% 20%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--scene-accent) 13%, transparent);
+  filter: blur(34px);
+  animation: mini-scene-glow 4.4s ease-in-out infinite alternate;
+}
+
+.mini-3d-scene__scan {
+  z-index: 4;
+  width: 1px;
+  height: 72%;
+  margin: 11% 0 0 18%;
+  background: linear-gradient(transparent, var(--scene-accent), transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--scene-accent) 55%, transparent);
+  opacity: 0.2;
+  animation: mini-scene-scan 5.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.mini-3d-scene__stage {
+  z-index: 2;
+  inset: 4% 4% 16%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mini-3d-scene:hover .mini-3d-scene__stage,
+.product-card:hover .mini-3d-scene__stage,
+.industry-card:hover .mini-3d-scene__stage {
+  transform: rotateX(-2deg) rotateY(4deg) scale(1.025);
+}
+
+.mini-3d__object {
+  --object-color: var(--scene-accent);
+  position: absolute;
+  left: var(--object-x);
+  top: var(--object-y);
+  width: calc(var(--object-width) * 1%);
+  height: calc(var(--object-height) * 1%);
+  transform:
+    translate(-50%, -50%)
+    translateZ(var(--object-z))
+    rotateX(var(--object-rx))
+    rotateY(var(--object-ry))
+    rotateZ(var(--object-rz));
+  transform-style: preserve-3d;
+}
+
+.mini-3d__object[data-tone="cool"] {
+  --object-color: #6e8fff;
+}
+
+.mini-3d__object[data-tone="signal"] {
+  --object-color: #ff8257;
+}
+
+.mini-3d__object[data-tone="muted"] {
+  --object-color: #6f8794;
+}
+
+.mini-3d__object[data-tone="white"] {
+  --object-color: #f3f8fb;
+}
+
+.mini-3d__object--cube,
+.mini-3d__object--disc,
+.mini-3d__object--node,
+.mini-3d__object--orb,
+.mini-3d__object--ring {
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.mini-3d__shape {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--object-color);
+  animation-delay: var(--object-delay);
+  animation-duration: var(--object-duration);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.mini-3d__object[data-motion="spin"] > .mini-3d__shape {
+  animation-name: mini-object-spin;
+  animation-timing-function: linear;
+}
+
+.mini-3d__object[data-motion="counterspin"] > .mini-3d__shape {
+  animation-name: mini-object-counterspin;
+  animation-timing-function: linear;
+}
+
+.mini-3d__object[data-motion="float"] > .mini-3d__shape {
+  animation-name: mini-object-float;
+}
+
+.mini-3d__object[data-motion="breathe"] > .mini-3d__shape {
+  animation-name: mini-object-breathe;
+}
+
+.mini-3d__object[data-motion="orbit"] > .mini-3d__shape {
+  animation-name: mini-object-orbit;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.mini-3d__object[data-motion="scan"] > .mini-3d__shape {
+  animation-name: mini-object-scan;
+}
+
+.mini-3d__object[data-motion="stream"] > .mini-3d__shape {
+  animation-name: mini-object-stream;
+}
+
+.mini-3d__object[data-motion="hinge"] > .mini-3d__shape {
+  animation-name: mini-object-hinge;
+}
+
+.mini-3d__object--ring > .mini-3d__shape {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--object-color) 50%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--object-color) 12%, transparent),
+    inset 0 0 18px color-mix(in srgb, var(--object-color) 8%, transparent);
+}
+
+.mini-3d__object--ring > .mini-3d__shape::after {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--object-color);
+  box-shadow: 0 0 12px var(--object-color);
+  content: "";
+  transform: translateX(-50%);
+}
+
+.mini-3d__object--orb > .mini-3d__shape,
+.mini-3d__object--node > .mini-3d__shape,
+.mini-3d__object--disc > .mini-3d__shape {
+  border: 1px solid color-mix(in srgb, var(--object-color) 58%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #fff 0 3%, transparent 7%),
+    radial-gradient(circle at 38% 34%, color-mix(in srgb, var(--object-color) 92%, #fff), color-mix(in srgb, var(--object-color) 42%, transparent) 34%, rgba(4, 10, 18, 0.88) 72%);
+  box-shadow:
+    0 0 26px color-mix(in srgb, var(--object-color) 28%, transparent),
+    inset -10px -12px 22px rgba(0, 0, 0, 0.42);
+}
+
+.mini-3d__object--node > .mini-3d__shape {
+  border: 0;
+  background: var(--object-color);
+  box-shadow: 0 0 14px var(--object-color);
+}
+
+.mini-3d__object--disc > .mini-3d__shape {
+  background:
+    repeating-radial-gradient(circle, transparent 0 12%, color-mix(in srgb, var(--object-color) 22%, transparent) 13% 14%, transparent 15% 24%),
+    radial-gradient(circle, color-mix(in srgb, var(--object-color) 34%, transparent), rgba(4, 10, 18, 0.9) 70%);
+  box-shadow:
+    0 8px 0 rgba(3, 9, 16, 0.82),
+    0 10px 28px color-mix(in srgb, var(--object-color) 22%, transparent);
+}
+
+.mini-3d__object--beam > .mini-3d__shape {
+  background: linear-gradient(90deg, transparent, var(--object-color), #fff, var(--object-color), transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--object-color) 70%, transparent);
+  transform-origin: center;
+}
+
+.mini-3d__object--panel > .mini-3d__shape {
+  border: 1px solid color-mix(in srgb, var(--object-color) 36%, transparent);
+  background:
+    linear-gradient(color-mix(in srgb, var(--object-color) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--object-color) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(145deg, color-mix(in srgb, var(--object-color) 13%, rgba(9, 19, 31, 0.94)), rgba(4, 10, 18, 0.86));
+  background-size: 14px 14px, 14px 14px, auto;
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.25),
+    inset 0 0 20px color-mix(in srgb, var(--object-color) 7%, transparent);
+}
+
+.mini-3d__object--cube > .mini-3d__shape,
+.mini-3d__object--column > .mini-3d__shape {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.mini-3d__object--cube i,
+.mini-3d__object--column i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--object-color) 42%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--object-color) 20%, transparent), rgba(6, 15, 25, 0.8)),
+    linear-gradient(color-mix(in srgb, var(--object-color) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--object-color) 8%, transparent) 1px, transparent 1px);
+  background-size: auto, 10px 10px, 10px 10px;
+  backface-visibility: visible;
+}
+
+.mini-3d__object--cube i[data-face="front"],
+.mini-3d__object--column i[data-face="front"] {
+  transform: translateZ(18px);
+}
+
+.mini-3d__object--cube i[data-face="back"],
+.mini-3d__object--column i[data-face="back"] {
+  transform: rotateY(180deg) translateZ(18px);
+}
+
+.mini-3d__object--cube i[data-face="left"],
+.mini-3d__object--column i[data-face="left"] {
+  transform: rotateY(-90deg) translateZ(18px);
+}
+
+.mini-3d__object--cube i[data-face="right"],
+.mini-3d__object--column i[data-face="right"] {
+  transform: rotateY(90deg) translateZ(18px);
+}
+
+.mini-3d__object--cube i[data-face="top"],
+.mini-3d__object--column i[data-face="top"] {
+  transform: rotateX(90deg) translateZ(18px);
+}
+
+.mini-3d__object--cube i[data-face="bottom"],
+.mini-3d__object--column i[data-face="bottom"] {
+  transform: rotateX(-90deg) translateZ(18px);
+}
+
+.mini-3d__object--stack > .mini-3d__shape {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.mini-3d__object--stack i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--object-color) 34%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--object-color) 14%, rgba(7, 16, 26, 0.94)), rgba(4, 10, 18, 0.86)),
+    repeating-linear-gradient(90deg, transparent 0 18%, color-mix(in srgb, var(--object-color) 9%, transparent) 19% 20%);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  transform: translate3d(var(--layer-x), var(--layer-y), var(--layer-z));
+}
+
+.mini-3d__object--glyph > .mini-3d__shape {
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--object-color) 24%, transparent);
+  background: rgba(4, 10, 18, 0.58);
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--object-color) 13%, transparent),
+    inset 0 0 18px rgba(255, 255, 255, 0.025);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: clamp(10px, 1.1vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-align: center;
+}
+
+.mini-3d__object--shield > .mini-3d__shape {
+  clip-path: polygon(50% 0, 92% 16%, 84% 70%, 50% 100%, 16% 70%, 8% 16%);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--object-color) 42%, transparent), rgba(5, 14, 24, 0.9)),
+    repeating-linear-gradient(0deg, transparent 0 10px, color-mix(in srgb, var(--object-color) 9%, transparent) 11px 12px);
+  box-shadow: inset 0 0 28px color-mix(in srgb, var(--object-color) 20%, transparent);
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--object-color) 32%, transparent));
+}
+
+.mini-3d__object--cone > .mini-3d__shape {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--object-color) 4%, transparent), color-mix(in srgb, var(--object-color) 28%, transparent));
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--object-color) 24%, transparent));
+  opacity: 0.62;
+}
+
+.mini-3d__object--wave > .mini-3d__shape {
+  border-top: 2px solid var(--object-color);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 0, color-mix(in srgb, var(--object-color) 16%, transparent), transparent 66%);
+  box-shadow: 0 -5px 18px color-mix(in srgb, var(--object-color) 22%, transparent);
+}
+
+.mini-3d-scene[data-model="dialogue-agent"] .mini-3d__object--panel > .mini-3d__shape {
+  border-radius: 14px 14px 14px 3px;
+}
+
+.mini-3d-scene[data-model="media-broadcast"] .mini-3d__object--panel > .mini-3d__shape,
+.mini-3d-scene[data-model="video-packet"] .mini-3d__object--panel > .mini-3d__shape {
+  border-radius: 7px;
+}
+
+.mini-3d-scene__readout {
+  position: absolute;
+  z-index: 5;
+  right: 12px;
+  bottom: 10px;
+  left: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 7px;
+  color: color-mix(in srgb, var(--scene-accent) 68%, #91a2af);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 6px;
+  letter-spacing: 0.12em;
+}
+
+.mini-3d-scene__readout i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--scene-accent);
+  box-shadow: 0 0 10px var(--scene-accent);
+}
+
+.mini-3d-scene__readout span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-3d-scene__readout b {
+  color: rgba(243, 248, 251, 0.64);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lifecycle-card .mini-3d-scene {
+  height: 180px;
+  margin: 16px 0 30px;
+}
+
+.product-card .mini-3d-scene {
+  height: 148px;
+  margin: 2px 0 22px;
+}
+
+.industry-card .mini-3d-scene {
+  height: 182px;
+  margin: 20px 0 24px;
+}
+
+.industry-card--featured .mini-3d-scene {
+  height: 216px;
+}
+
+@keyframes mini-scene-sweep {
+  0%,
+  35% {
+    transform: translateX(-100%);
+  }
+  65%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes mini-scene-glow {
+  to {
+    opacity: 0.55;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes mini-scene-scan {
+  0%,
+  18% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  32% {
+    opacity: 0.32;
+  }
+  78% {
+    opacity: 0.18;
+  }
+  100% {
+    transform: translateX(560%);
+    opacity: 0;
+  }
+}
+
+@keyframes mini-object-spin {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes mini-object-counterspin {
+  to {
+    transform: rotateZ(-360deg);
+  }
+}
+
+@keyframes mini-object-float {
+  50% {
+    transform: translate3d(0, -7px, 8px) rotateY(4deg);
+  }
+}
+
+@keyframes mini-object-breathe {
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes mini-object-orbit {
+  0% {
+    transform: rotateX(-8deg) rotateY(-12deg) rotateZ(0);
+  }
+  50% {
+    transform: rotateX(10deg) rotateY(168deg) rotateZ(8deg);
+  }
+  100% {
+    transform: rotateX(-8deg) rotateY(348deg) rotateZ(0);
+  }
+}
+
+@keyframes mini-object-scan {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scaleX(0.72);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scaleX(1.08);
+  }
+}
+
+@keyframes mini-object-stream {
+  0%,
+  100% {
+    opacity: 0.36;
+    transform: translateX(-8%) scaleX(0.78);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(8%) scaleX(1);
+  }
+}
+
+@keyframes mini-object-hinge {
+  0%,
+  100% {
+    transform: rotateX(-3deg) translateY(2px);
+  }
+  50% {
+    transform: rotateX(7deg) translateY(-4px);
+  }
+}
+
+@media (max-width: 900px) {
+  .lifecycle-card .mini-3d-scene,
+  .product-card .mini-3d-scene {
+    height: 164px;
+  }
+
+  .industry-card .mini-3d-scene,
+  .industry-card--featured .mini-3d-scene {
+    height: 176px;
+  }
+}
+
+@media (max-width: 620px) {
+  .mini-3d-scene__readout span {
+    display: none;
+  }
+
+  .lifecycle-card .mini-3d-scene,
+  .product-card .mini-3d-scene,
+  .industry-card .mini-3d-scene,
+  .industry-card--featured .mini-3d-scene {
+    height: 174px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-3d-scene *,
+  .mini-3d-scene::before {
+    animation: none !important;
+  }
+}

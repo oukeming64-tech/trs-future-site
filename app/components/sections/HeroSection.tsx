@@ -2,6 +2,9 @@ import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 import { DataCoreScene } from "../site/DataCoreScene";
 import { heroMetrics, lifecycle } from "../../data/site-content";
 import { Reveal } from "../site/Reveal";
+import { Mini3DScene } from "../visuals/Mini3DScene";
+
+const lifecycleAccents = ["#5ee7ff", "#6e8fff", "#a6f0bd", "#ff8257"] as const;
 
 export function HeroSection() {
   return (
@@ -92,6 +95,11 @@ export function HeroSection() {
                   <span>{item.index}</span>
                   <i aria-hidden="true" />
                 </div>
+                <Mini3DScene
+                  model={item.visual}
+                  label={item.title}
+                  accent={lifecycleAccents[index]}
+                />
                 <small>{item.caption}</small>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
