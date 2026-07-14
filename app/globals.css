@@ -1146,6 +1146,42 @@ button {
   line-height: 1.85;
 }
 
+.product-explorer__flow {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0;
+  max-width: 230px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-explorer__flow li {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  min-height: 38px;
+  border-top: 1px solid color-mix(in srgb, var(--category-accent) 16%, var(--line));
+}
+
+.product-explorer__flow li:last-child {
+  border-bottom: 1px solid color-mix(in srgb, var(--category-accent) 16%, var(--line));
+}
+
+.product-explorer__flow span {
+  color: color-mix(in srgb, var(--category-accent) 70%, #718592);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 7px;
+}
+
+.product-explorer__flow strong {
+  color: #c9d8df;
+  font-size: 10px;
+  font-weight: 480;
+  letter-spacing: 0.08em;
+}
+
 .product-orbit {
   position: absolute;
   right: -28%;
@@ -1261,7 +1297,7 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 404px;
+  min-height: 440px;
   padding: 22px;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -1338,10 +1374,29 @@ button {
 }
 
 .product-card p {
-  margin: 10px 0 20px;
+  margin: 10px 0 14px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.7;
+}
+
+.product-card__outcome {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 18px;
+  padding-top: 13px;
+  border-top: 1px solid color-mix(in srgb, var(--category-accent) 15%, var(--line));
+  color: #c6d6de;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.product-card__outcome small {
+  color: color-mix(in srgb, var(--category-accent) 72%, #718592);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
 }
 
 .product-card__link {
@@ -1406,7 +1461,7 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 555px;
+  min-height: 610px;
   padding: 28px;
   overflow: hidden;
   transition: background-color 0.4s ease;
@@ -1512,6 +1567,35 @@ button {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.72;
+}
+
+.industry-card__scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.industry-card__scenarios li {
+  padding: 5px 8px;
+  border: 1px solid rgba(132, 164, 180, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.018);
+  color: #8299a6;
+  font-size: 12px;
+  line-height: 1.2;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.industry-card:hover .industry-card__scenarios li {
+  border-color: rgba(94, 231, 255, 0.25);
+  background: rgba(94, 231, 255, 0.04);
+  color: #b7d8e4;
 }
 
 .industry-card__link {
@@ -1846,11 +1930,114 @@ button {
   font-size: 11px;
 }
 
+.evidence-desk {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  margin-top: 86px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(94, 231, 255, 0.025), transparent 42%),
+    rgba(5, 12, 20, 0.76);
+  overflow: hidden;
+}
+
+.evidence-desk__intro {
+  padding: 38px;
+}
+
+.evidence-desk__intro h3 {
+  max-width: 420px;
+  margin: 15px 0 14px;
+  color: var(--white);
+  font-size: 27px;
+  font-weight: 450;
+  line-height: 1.35;
+  letter-spacing: -0.035em;
+}
+
+.evidence-desk__intro p {
+  max-width: 460px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.85;
+}
+
+.evidence-desk__links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-left: 1px solid var(--line);
+}
+
+.evidence-desk__links a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 252px;
+  padding: 28px 24px;
+  border-right: 1px solid var(--line);
+  transition:
+    background-color 0.3s ease,
+    transform 0.35s var(--ease-out);
+}
+
+.evidence-desk__links a:last-child {
+  border-right: 0;
+}
+
+.evidence-desk__links a:hover {
+  z-index: 1;
+  background: rgba(94, 231, 255, 0.045);
+  transform: translateY(-3px);
+}
+
+.evidence-desk__links a > span {
+  color: #526b79;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 8px;
+}
+
+.evidence-desk__links small {
+  margin-top: 42px;
+  color: var(--cyan);
+  font-size: 7px;
+  letter-spacing: 0.13em;
+}
+
+.evidence-desk__links strong {
+  margin-top: 9px;
+  color: #dce8ed;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.evidence-desk__links p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.evidence-desk__links svg {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  color: #657c89;
+  transition:
+    color 0.25s ease,
+    transform 0.3s var(--ease-out);
+}
+
+.evidence-desk__links a:hover svg {
+  color: var(--cyan);
+  transform: translate(3px, -3px);
+}
+
 .about-timeline {
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 110px;
+  margin-top: 90px;
 }
 
 .about-timeline__line {
@@ -2394,6 +2581,15 @@ button {
     position: static;
   }
 
+  .evidence-desk {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-desk__links {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
   .about-timeline {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 48px;
@@ -2611,7 +2807,7 @@ button {
   }
 
   .product-explorer__summary {
-    min-height: 410px;
+    min-height: 480px;
     padding: 28px;
   }
 
@@ -2631,7 +2827,7 @@ button {
 
   .product-card,
   .product-card:nth-child(2n) {
-    min-height: 410px;
+    min-height: 450px;
     padding: 24px;
     border-right: 0;
   }
@@ -2651,11 +2847,13 @@ button {
   }
 
   .industry-card > a {
-    min-height: 535px;
+    min-height: 520px;
+    padding: 24px;
   }
 
   .industry-card__visual {
-    min-height: 205px;
+    flex: 0 0 180px;
+    min-height: 180px;
   }
 
   .client-constellation__tabs {
@@ -2704,6 +2902,36 @@ button {
 
   .about-metric {
     min-height: 150px;
+  }
+
+  .evidence-desk {
+    margin-top: 64px;
+  }
+
+  .evidence-desk__intro {
+    padding: 28px 24px;
+  }
+
+  .evidence-desk__intro h3 {
+    font-size: 24px;
+  }
+
+  .evidence-desk__links {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-desk__links a {
+    min-height: 190px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .evidence-desk__links a:last-child {
+    border-bottom: 0;
+  }
+
+  .evidence-desk__links small {
+    margin-top: 28px;
   }
 
   .about-timeline {

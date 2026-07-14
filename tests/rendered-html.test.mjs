@@ -35,6 +35,9 @@ test("server-renders the TRS concept site", async () => {
   assert.match(html, /产品与能力/);
   assert.match(html, /行业方案/);
   assert.match(html, /10,000\+/);
+  assert.match(html, /业务结果/);
+  assert.match(html, /FACT CHECK \/ PRIMARY SOURCES/);
+  assert.match(html, /2026\.07\.07/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });
 
@@ -45,6 +48,7 @@ test("keeps content, sections, and interactive visuals separated", async () => {
     scene,
     explorer,
     industries,
+    about,
     hero,
     brand,
     blueprints,
@@ -65,6 +69,10 @@ test("keeps content, sections, and interactive visuals separated", async () => {
     ),
     readFile(
       new URL("../app/components/sections/IndustriesSection.tsx", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../app/components/sections/AboutSection.tsx", import.meta.url),
       "utf8",
     ),
     readFile(
@@ -94,6 +102,9 @@ test("keeps content, sections, and interactive visuals separated", async () => {
   const blueprintIds = [
     ...blueprints.matchAll(/^  "([a-z0-9-]+)": \{$/gm),
   ].map((match) => match[1]);
+  const productOutcomes = [...data.matchAll(/^\s+outcome: "(.+)",$/gm)];
+  const industryScenarios = [...data.matchAll(/^\s+scenarios: \[(.+)\],$/gm)]
+    .flatMap((match) => [...match[1].matchAll(/"([^"]+)"/g)]);
 
   assert.match(page, /<HeroSection \/>/);
   assert.match(page, /<PlatformSection \/>/);
@@ -104,11 +115,18 @@ test("keeps content, sections, and interactive visuals separated", async () => {
   assert.match(scene, /prefers-reduced-motion/);
   assert.match(explorer, /role="tablist"/);
   assert.match(explorer, /<Mini3DScene/);
+  assert.match(explorer, /product-card__outcome/);
   assert.match(industries, /<Mini3DScene/);
+  assert.match(industries, /industry-card__scenarios/);
+  assert.match(about, /evidenceLinks/);
   assert.match(hero, /<Mini3DScene/);
   assert.match(brand, /src="\/trs-logo\.png"/);
   assert.equal(contentVisuals.length, 35);
   assert.equal(new Set(contentVisuals).size, 35);
+  assert.equal(productOutcomes.length, 24);
+  assert.equal(industryScenarios.length, 21);
+  assert.match(data, /2026\.07\.07/);
+  assert.match(data, /t20230629_10053\.html/);
   assert.deepEqual(
     [...blueprintIds].sort(),
     [...contentVisuals].sort(),

@@ -1,6 +1,6 @@
 {
   "name": "trs-future-site",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A modular, 3D-forward concept redesign for the TRS corporate website.",
   "private": true,
   "engines": {

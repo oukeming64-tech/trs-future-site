@@ -72,6 +72,14 @@ export function ProductExplorer() {
           <span className="micro-label">{active.eyebrow}</span>
           <strong>{active.label}</strong>
           <p>{active.summary}</p>
+          <ol className="product-explorer__flow" aria-label={`${active.label}能力闭环`}>
+            {active.flow.map((step, index) => (
+              <li key={step}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{step}</strong>
+              </li>
+            ))}
+          </ol>
           <div className="product-explorer__signal" aria-hidden="true">
             <span>LIVE CAPABILITY MAP</span>
             <i />
@@ -99,8 +107,12 @@ export function ProductExplorer() {
               />
               <h3>{product.name}</h3>
               <p>{product.description}</p>
+              <span className="product-card__outcome">
+                <small>业务结果</small>
+                {product.outcome}
+              </span>
               <span className="product-card__link">
-                查看产品 <ArrowUpRight size={15} />
+                {product.cta ?? "查看官方产品"} <ArrowUpRight size={15} />
               </span>
             </a>
           ))}

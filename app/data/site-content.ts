@@ -22,10 +22,13 @@ export type ProductCategory = {
   eyebrow: string;
   summary: string;
   accent: string;
+  flow: [string, string, string];
   products: Array<{
     name: string;
     description: string;
+    outcome: string;
     href: string;
+    cta?: string;
     tag: string;
     visual: ProductModelId;
   }>;
@@ -37,6 +40,7 @@ export type Industry = {
   name: string;
   tagline: string;
   description: string;
+  scenarios: [string, string, string];
   href: string;
   metric: string;
   icon: LucideIcon;
@@ -103,10 +107,12 @@ export const productCategories: ProductCategory[] = [
     eyebrow: "DATA INFRASTRUCTURE",
     summary: "覆盖数据应用、采集、治理、分析与可视化的全链路产品体系。",
     accent: "#5ee7ff",
+    flow: ["多源接入", "可信治理", "实时洞察"],
     products: [
       {
         name: "网察",
         description: "网络舆情态势感知与洞察平台",
+        outcome: "让风险信号更早进入研判",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/wc_yqjc_/",
         tag: "舆情监测",
         visual: "sentiment-radar",
@@ -114,6 +120,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "数家",
         description: "高信源、精加工的资讯数据云服务",
+        outcome: "让可靠资讯成为可调用的数据资产",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/sj_mtzxsjyfw_/",
         tag: "数据云服务",
         visual: "data-cloud",
@@ -121,6 +128,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "海策",
         description: "政策全生命周期管理与智能分析",
+        outcome: "让政策变化贯穿研判与执行",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/hc_zcdn_/",
         tag: "政策大脑",
         visual: "policy-stack",
@@ -128,6 +136,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "数星产业大脑",
         description: "融合内外部数据的产业智慧大脑",
+        outcome: "让产业关系与趋势持续可见",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/sxcydn/",
         tag: "产业智能",
         visual: "industry-constellation",
@@ -135,6 +144,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "TRS 海贝",
         description: "完全国产自研的搜索型（向量）数据库",
+        outcome: "让海量文本被快速检索与关联",
         href: "https://www.trs.com.cn/cpfw/dsj/sjzl/hb_dsjglxt_/",
         tag: "向量数据库",
         visual: "vector-vault",
@@ -142,6 +152,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "海蜘 / 海聚",
         description: "分布式采集与流批一体的数据融合底座",
+        outcome: "让跨源数据稳定汇入统一底座",
         href: "https://www.trs.com.cn/cpfw/dsj/sjcj/hz_fbscjxt_/",
         tag: "采集治理",
         visual: "fusion-web",
@@ -155,17 +166,21 @@ export const productCategories: ProductCategory[] = [
     eyebrow: "SEMANTIC INTELLIGENCE",
     summary: "从行业大模型到知识工程与多模态能力，为复杂业务提供可解释智能。",
     accent: "#7c9cff",
+    flow: ["语义理解", "知识建模", "智能交互"],
     products: [
       {
         name: "拓天大模型",
         description: "面向媒体、金融、政务等关键行业的场景化大模型",
-        href: "https://www.trs.com.cn/",
+        outcome: "让行业知识进入可控模型能力",
+        href: "https://www.trs.com.cn/ljwm/xwhd/202306/t20230629_10053.html",
+        cta: "查看官方发布",
         tag: "行业大模型",
         visual: "foundation-model",
       },
       {
         name: "智拓",
         description: "企业级人工智能开放平台",
+        outcome: "让 AI 能力被统一开发与管理",
         href: "https://www.trs.com.cn/cpfw/rgzn/aiptfw/zt_rgznkfpt_/",
         tag: "AI 平台",
         visual: "ai-workbench",
@@ -173,6 +188,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "安拓",
         description: "知识图谱建模、融合与应用平台",
+        outcome: "让实体关系成为可推理知识",
         href: "https://www.trs.com.cn/cpfw/rgzn/aiptfw/at_zstppt_/",
         tag: "知识图谱",
         visual: "knowledge-graph",
@@ -180,6 +196,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "智语 CKM",
         description: "面向中文语义理解的自然语言处理平台",
+        outcome: "让中文语义理解进入业务流程",
         href: "https://www.trs.com.cn/cpfw/rgzn/zryycl/zy_CKM_NLP_pt/",
         tag: "NLP",
         visual: "semantic-wave",
@@ -187,6 +204,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "TRS 智眼",
         description: "图像与视频内容的智能识别引擎",
+        outcome: "让图像与视频进入结构化分析",
         href: "https://www.trs.com.cn/cpfw/rgzn/txfxycl/zy_txspsblj_/",
         tag: "多模态",
         visual: "vision-aperture",
@@ -194,6 +212,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "小思",
         description: "面向行业知识服务的智能对话机器人",
+        outcome: "让知识服务拥有自然交互入口",
         href: "https://www.trs.com.cn/cpfw/rgzn/zndhjqr/xs/",
         tag: "智能交互",
         visual: "dialogue-agent",
@@ -207,10 +226,12 @@ export const productCategories: ProductCategory[] = [
     eyebrow: "TRUSTED SECURITY",
     summary: "围绕边界安全、大数据安全与物联网安全，建立可信的数据流通通道。",
     accent: "#ff8b5f",
+    flow: ["安全隔离", "可信交换", "持续审计"],
     products: [
       {
         name: "天行 GAP",
         description: "安全隔离与信息交换系统",
+        outcome: "让跨边界交换拥有可控通道",
         href: "https://www.trs.com.cn/cpfw/aq/bjaq/txaqglyxxjhxtgap/",
         tag: "边界安全",
         visual: "isolation-gate",
@@ -218,6 +239,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天行 UIS",
         description: "安全单向导入与数据传输系统",
+        outcome: "让高安全区数据单向可信进入",
         href: "https://www.trs.com.cn/cpfw/aq/bjaq/txaqdxdrxtuis/",
         tag: "单向导入",
         visual: "one-way-tunnel",
@@ -225,6 +247,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天行 MTP",
         description: "跨域视频交换与安全传输系统",
+        outcome: "让视频资源跨域安全流转",
         href: "https://www.trs.com.cn/cpfw/aq/bjaq/txaqspjhxtmtp/",
         tag: "视频交换",
         visual: "video-packet",
@@ -232,6 +255,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天行 DTP",
         description: "安全数据交换系统",
+        outcome: "让数据交换过程可控、可追踪",
         href: "https://www.trs.com.cn/cpfw/aq/bjaq/txaqsjjhxtdtp/",
         tag: "数据交换",
         visual: "secure-bridge",
@@ -239,6 +263,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天行 BOP",
         description: "边界安全运维管理平台",
+        outcome: "让边界设备与策略集中运维",
         href: "https://www.trs.com.cn/cpfw/aq/dsjaq/txbjaqywglptbop/",
         tag: "安全运维",
         visual: "operations-orbit",
@@ -246,6 +271,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天行 DAS",
         description: "数据库安全审计与性能监测",
+        outcome: "让数据库风险与性能持续可见",
         href: "https://www.trs.com.cn/cpfw/aq/dsjaq/txsjkaqsjjxnjcsjxtdas/",
         tag: "安全审计",
         visual: "audit-scanner",
@@ -259,10 +285,12 @@ export const productCategories: ProductCategory[] = [
     eyebrow: "CLOUD APPLICATIONS",
     summary: "把数据、模型与行业知识封装成开箱即用的云服务与业务应用。",
     accent: "#a6f0bd",
+    flow: ["能力封装", "云上服务", "场景复用"],
     products: [
       {
         name: "数星风控",
         description: "基于海量数据的金融智能知识云服务",
+        outcome: "让金融风险信号更早汇入决策",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/sxfk/",
         tag: "金融风控",
         visual: "risk-shield",
@@ -270,6 +298,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "数星电报",
         description: "企业、研报、产业与政策的一站式查询",
+        outcome: "让产业情报更快抵达判断",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/sxdb/",
         tag: "产业资讯",
         visual: "market-stream",
@@ -277,6 +306,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天目",
         description: "一体化、智能化的开源情报服务",
+        outcome: "让公开信息形成持续情报视野",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/tm_kyqb_/",
         tag: "开源情报",
         visual: "intel-telescope",
@@ -284,6 +314,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "网搜",
         description: "安全可靠、智能易用的网站搜索服务",
+        outcome: "让站内知识更快被精准找到",
         href: "https://www.trs.com.cn/cpfw/dsj/sjyy/ws/",
         tag: "智能搜索",
         visual: "search-lens",
@@ -291,6 +322,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "可视化大屏云",
         description: "零代码拖拽式数据可视化大屏制作",
+        outcome: "让复杂数据快速形成可视表达",
         href: "https://www.trs.com.cn/cpfw/dsj/sjksh/sjkshdpyfwpt/",
         tag: "数据可视化",
         visual: "dashboard-cubes",
@@ -298,6 +330,7 @@ export const productCategories: ProductCategory[] = [
       {
         name: "天枢",
         description: "面向企业应用的云原生技术平台",
+        outcome: "让企业应用获得云原生交付底座",
         href: "https://www.trs.com.cn/cpfw/qt/kfzfw/trstsyysjspt/",
         tag: "云原生底座",
         visual: "cloud-cluster",
@@ -313,6 +346,7 @@ export const industries: Industry[] = [
     name: "数字政府",
     tagline: "让公共服务更懂需求",
     description: "以数据治理、智能搜索与知识服务支撑政务公开、政务服务和智慧监管。",
+    scenarios: ["政务公开", "智能政务服务", "智慧监管"],
     href: "https://www.trs.com.cn/xyfa/szzf/",
     metric: "GOVERNMENT",
     icon: Landmark,
@@ -324,6 +358,7 @@ export const industries: Industry[] = [
     name: "金融科技",
     tagline: "让风险在发生前被看见",
     description: "覆盖资讯、风控、消保与监管科技，以语义智能提升金融决策效率。",
+    scenarios: ["风险预警", "消费者保护", "监管科技"],
     href: "https://www.trs.com.cn/xyfa/jrkj/",
     metric: "FINTECH",
     icon: BadgeDollarSign,
@@ -335,6 +370,7 @@ export const industries: Industry[] = [
     name: "媒体融合",
     tagline: "让内容生产进入智能协同",
     description: "连接策采编发评全流程，推动主流媒体内容资产化与传播智能化。",
+    scenarios: ["智能策采编", "内容资产化", "传播效果评估"],
     href: "https://www.trs.com.cn/xyfa/mtrh/",
     metric: "MEDIA",
     icon: RadioTower,
@@ -346,6 +382,7 @@ export const industries: Industry[] = [
     name: "公共安全",
     tagline: "让复杂线索形成行动答案",
     description: "融合开源情报、知识图谱与大数据分析，服务公共安全智能研判。",
+    scenarios: ["开源情报", "线索关联研判", "指挥决策辅助"],
     href: "https://www.trs.com.cn/xyfa/ggaq/",
     metric: "PUBLIC SAFETY",
     icon: ShieldCheck,
@@ -357,6 +394,7 @@ export const industries: Industry[] = [
     name: "企业数智化",
     tagline: "让组织知识持续生长",
     description: "打通数据、内容与知识资产，构建面向企业流程的智能中枢。",
+    scenarios: ["企业知识库", "智能搜索", "流程智能体"],
     href: "https://www.trs.com.cn/xyfa/qyszhzx/",
     metric: "ENTERPRISE",
     icon: Building2,
@@ -368,6 +406,7 @@ export const industries: Industry[] = [
     name: "知识产权",
     tagline: "让创新成果被精准发现",
     description: "以检索、语义分析与专利数据服务支撑知识产权创造、保护与运用。",
+    scenarios: ["专利检索", "技术洞察", "成果保护运营"],
     href: "https://www.trs.com.cn/xyfa/zscq/",
     metric: "INTELLECTUAL PROPERTY",
     icon: Scale,
@@ -379,6 +418,7 @@ export const industries: Industry[] = [
     name: "出版",
     tagline: "让专业内容抵达更多读者",
     description: "用语义智能重构出版内容生产、知识服务与融合传播链路。",
+    scenarios: ["智能编校", "知识服务", "融合传播"],
     href: "https://www.trs.com.cn/xyfa/cb_823/",
     metric: "PUBLISHING",
     icon: BookOpenText,
@@ -458,22 +498,22 @@ export const companyMetrics = [
 
 export const insights = [
   {
-    date: "2025.02.10",
-    category: "技术进展",
-    title: "多维集成融合 DeepSeek，拓尔思以“平台 + 系统 + 服务”领航行业大模型应用",
-    href: "https://www.trs.com.cn/ljwm/xwhd/202502/t20250210_10494.html",
-  },
-  {
-    date: "2025.01.24",
-    category: "公司动态",
-    title: "拓尔思 2025 年新年寄语：回望来时路，眺望新征程",
-    href: "https://www.trs.com.cn/ljwm/xwhd/202501/t20250124_10481.html",
-  },
-  {
-    date: "2023.06.29",
+    date: "2026.07.07",
     category: "产品发布",
-    title: "拓尔思拓天大模型正式发布，聚焦大模型场景化应用和行业落地",
-    href: "https://www.trs.com.cn/ljwm/xwhd/202306/t20230629_10053.html",
+    title: "预见先机、推演变局｜TRS 事件预测和推演系统在 2026 全球数字经济大会重磅首发",
+    href: "https://www.trs.com.cn/ljwm/xwhd/202607/t20260707_10649.html",
+  },
+  {
+    date: "2026.07.06",
+    category: "公司动态",
+    title: "拓尔思两大落地项目入选 2026 全球数字经济大会优秀案例",
+    href: "https://www.trs.com.cn/ljwm/xwhd/202607/t20260706_10648.html",
+  },
+  {
+    date: "2026.07.02",
+    category: "行业实践",
+    title: "从“25 人天”到“2 小时”：动态本体如何在资金链分析中实现效率跃升",
+    href: "https://www.trs.com.cn/ljwm/xwhd/202607/t20260702_10647.html",
   },
 ];
 
@@ -486,3 +526,27 @@ export const officialLinks = {
   investor:
     "https://www.cninfo.com.cn/new/disclosure/stock?orgId=9900016933&stockCode=300229#latestAnnouncement",
 };
+
+export const evidenceLinks = [
+  {
+    index: "01",
+    eyebrow: "PRODUCT + TECH",
+    title: "产品与技术文档",
+    description: "从公开手册与技术资料继续核验产品能力。",
+    href: officialLinks.documents,
+  },
+  {
+    index: "02",
+    eyebrow: "ECOSYSTEM",
+    title: "生态与兼容体系",
+    description: "查看适配、伙伴与技术生态的官方入口。",
+    href: officialLinks.ecosystem,
+  },
+  {
+    index: "03",
+    eyebrow: "DISCLOSURE",
+    title: "公开信息披露",
+    description: "从法定披露渠道核对公司与经营信息。",
+    href: officialLinks.investor,
+  },
+] as const;

@@ -59,6 +59,11 @@ export function IndustriesSection() {
                     <small>{industry.tagline}</small>
                     <h3>{industry.name}</h3>
                     <p>{industry.description}</p>
+                    <ul className="industry-card__scenarios" aria-label={`${industry.name}典型场景`}>
+                      {industry.scenarios.map((scenario) => (
+                        <li key={scenario}>{scenario}</li>
+                      ))}
+                    </ul>
                   </div>
                   <span className="industry-card__link">
                     进入方案 <ArrowUpRight size={16} />

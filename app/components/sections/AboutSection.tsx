@@ -1,5 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
-import { companyMetrics, officialLinks } from "../../data/site-content";
+import {
+  companyMetrics,
+  evidenceLinks,
+  officialLinks,
+} from "../../data/site-content";
 import { Reveal } from "../site/Reveal";
 import { SectionHeading } from "../site/SectionHeading";
 
@@ -50,6 +54,27 @@ export function AboutSection() {
             ))}
           </div>
         </div>
+
+        <Reveal className="evidence-desk" delay={90}>
+          <div className="evidence-desk__intro">
+            <span className="micro-label">FACT CHECK / PRIMARY SOURCES</span>
+            <h3>让技术实力不仅被看见，也能被继续核验</h3>
+            <p>
+              产品能力、生态适配和公司信息分别连接官方一手入口；概念表达负责讲清价值，事实判断回到可追溯来源。
+            </p>
+          </div>
+          <div className="evidence-desk__links">
+            {evidenceLinks.map((item) => (
+              <a key={item.index} href={item.href} target="_blank" rel="noreferrer">
+                <span>{item.index}</span>
+                <small>{item.eyebrow}</small>
+                <strong>{item.title}</strong>
+                <p>{item.description}</p>
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </Reveal>
 
         <Reveal className="about-timeline" delay={120}>
           <div className="about-timeline__line" aria-hidden="true" />
