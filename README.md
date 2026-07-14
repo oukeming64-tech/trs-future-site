@@ -6,9 +6,15 @@
 
 ## 在线体验
 
-- [在线预览](https://trs-future-site.kemo64.chatgpt.site/)：当前为站点所有者可访问版本
+- [在线预览](https://oukeming64-tech.github.io/trs-future-site/)：由 GitHub Pages 公开托管，主分支更新后自动发布
 - [GitHub 开源仓库](https://github.com/oukeming64-tech/trs-future-site)
 - [v1.1.0 首版解说视频](https://github.com/oukeming64-tech/trs-future-site/releases/download/v1.1.0/trs-future-site-first-cut.mp4)：55.83 秒，1080p / 30fps，含中文旁白、字幕与原创电子配乐
+
+## 维护入口
+
+- 给设计、内容和普通维护者：[中文维护指南](./docs/EDITING-GUIDE.md)，按“想改什么”直接找到文件与检查方法。
+- 给 Codex、Claude 等自动化 Agent：[AGENTS.md](./AGENTS.md)，包含模块所有权、不可破坏的边界、必跑检查和文档同步规则。
+- 需要理解分层原因时阅读：[ARCHITECTURE.md](./ARCHITECTURE.md)。
 
 ## 已实现
 
@@ -23,16 +29,17 @@
 - 官方证据入口：产品文档、生态体系与法定披露可从主内容区继续核验
 - 桌面与移动端响应式布局、移动全屏导航、键盘焦点与减少动态效果支持
 - 官方产品、方案、资讯、文档和投资者关系外链
-- Cloudflare Workers 兼容的 vinext 构建与独立服务端渲染测试
+- Next.js 静态导出、GitHub Pages 自动发布与静态资源路径完整性测试
 
 ## 技术栈
 
 - React 19 + TypeScript
-- vinext / Vite / Cloudflare Workers
+- Next.js 16 App Router（静态导出）
 - Three.js（实时 3D 场景）
 - CSS 3D（产品、行业与全域感知微型场景）
 - Lucide React（界面图标）
 - Tailwind CSS 4 基础层 + 项目语义化 CSS
+- GitHub Actions + GitHub Pages（公开托管）
 
 ## 快速开始
 
@@ -47,6 +54,7 @@ npm run dev
 
 ```bash
 npm run build
+npm run build:pages
 npm run lint
 npm test
 npm audit
@@ -55,6 +63,8 @@ npm audit
 ## 目录职责
 
 ```text
+AGENTS.md                   # Agent 改动协议与模块地图
+.github/workflows/pages.yml # GitHub Pages 自动发布
 app/
 ├── components/
 │   ├── sections/       # 页面功能区块；一个文件负责一个官网模块
@@ -67,6 +77,8 @@ app/
 ├── mini-3d.css         # 微型 3D 场景的几何、动画与降级规则
 ├── layout.tsx          # SEO、语言和页面级元信息
 └── page.tsx            # 只负责编排区块，不承载业务细节
+docs/
+└── EDITING-GUIDE.md     # 给人的中文维护指南
 ```
 
 最常见的后续改动都集中在一处：
@@ -77,9 +89,9 @@ app/
 - 改某个产品或行业的微型 3D 原型：在 `site-content.ts` 调整 `visual`，并在 `app/components/visuals/mini-3d-blueprints.ts` 修改对应蓝图
 - 调整颜色、排版和断点：编辑 `app/globals.css` 顶部变量与对应分区
 
-完整边界和扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。中科闻歌竞品差异、吸收与舍弃项见 [docs/COMPETITOR-FUSION.md](./docs/COMPETITOR-FUSION.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
+完整改法见 [docs/EDITING-GUIDE.md](./docs/EDITING-GUIDE.md)，Agent 约束见 [AGENTS.md](./AGENTS.md)，架构与扩展方式见 [ARCHITECTURE.md](./ARCHITECTURE.md)。公开信息来源见 [docs/CONTENT-SOURCES.md](./docs/CONTENT-SOURCES.md)。中科闻歌竞品差异、吸收与舍弃项见 [docs/COMPETITOR-FUSION.md](./docs/COMPETITOR-FUSION.md)。首版视频的规格、章节和制作边界见 [docs/VIDEO.md](./docs/VIDEO.md)。
 
-发布前的基线检查为：构建成功、代码检查通过、2 项服务端渲染与架构测试通过、依赖审计为 0 项已知漏洞。
+`main` 分支的每次更新都会通过 `.github/workflows/pages.yml` 重新构建并发布 GitHub Pages。发布前的基线检查为：静态导出成功、代码检查通过、2 项静态页面与架构测试通过、依赖审计为 0 项已知漏洞。
 
 ## 内容与品牌说明
 
