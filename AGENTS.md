@@ -24,6 +24,7 @@
 | `next.config.ts` | Next.js 静态导出和 Pages 子路径 | 发布路径与导出行为 |
 | `.github/workflows/pages.yml` | GitHub Pages 预览自动发布 | Node 版本、构建和部署步骤 |
 | `.github/workflows/handoff.yml` | 正式官网终稿包手动生成 | 会签标签、验证、封装和保留时间 |
+| `LEADER-BRIEF.md` | 领导与领导 Codex 的一页说明 | 项目价值、当前状态、决策事项和汇报边界 |
 | `scripts/write-handoff-manifest.mjs` | 终稿版本清单 | 版本、提交、目标域名和上传规则 |
 | `scripts/assemble-handoff-package.mjs` | 终稿目录与校验值 | `site/`、随包指南和 SHA-256 校验 |
 | `tests/rendered-html.test.mjs` | 页面内容、资源路径和架构契约 | 数量、映射或部署规则变化时同步 |
@@ -40,6 +41,7 @@
 6. GitHub Pages 只用于 `/trs-future-site/` 预览；正式官网终稿必须使用根路径和 `https://www.trs.com.cn/` 元数据。两种产物不能混用。
 7. 正式终稿工作流只能手动触发，不能自动改动 `www.trs.com.cn`。没有完整部门会签时，不得把预览版描述为正式官网终稿。
 8. 旧 `.openai/hosting.json`、vinext Worker 和 Sites 发布链已退休，不要恢复，除非用户明确要求再次迁移。
+9. 用户要求向领导汇报时，先读 `LEADER-BRIEF.md`，用业务语言简要说明；不得把概念预览描述为官方发布或已替换现网。
 
 ## 改动流程
 
@@ -65,6 +67,7 @@ git diff --check
 - 模块职责或目录变化 → `ARCHITECTURE.md`、`docs/EDITING-GUIDE.md`、本文件
 - 构建或部署变化 → README、`ARCHITECTURE.md`、本文件、工作流
 - 会签、终稿封装、现网上线或回滚变化 → `docs/PRODUCTION-HANDOFF.md`、README、工作流和交付测试
+- 项目定位、领导决策事项或对外状态变化 → `LEADER-BRIEF.md`、README 和对应事实文档
 - 版本发布 → `CHANGELOG.md` 和 GitHub Release
 
 历史版本说明保持追加式，不把已经发布的旧实现改写成当前状态。

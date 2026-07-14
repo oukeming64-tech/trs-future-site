@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- 新增 `LEADER-BRIEF.md`，让领导和领导的 Codex 用一页内容了解仓库用途、查看与定稿方式、需要拍板的事项和正式上线边界。
+
 ## 1.3.1 — 2026-07-14
 
 - 新增 `docs/PRODUCTION-HANDOFF.md`，覆盖七类部门会签、终稿冻结、下载验真、预发布、正式替换与回滚。
