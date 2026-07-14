@@ -140,6 +140,10 @@ test("keeps content, sections, and interactive visuals separated", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.doesNotMatch(packageJson, /vinext|wrangler|@cloudflare\/vite-plugin/);
   assert.match(packageJson, /build:pages/);
+  assert.match(
+    packageJson,
+    /GITHUB_PAGES=true SITE_URL=https:\/\/oukeming64-tech\.github\.io\/trs-future-site\//,
+  );
   assert.match(nextConfig, /output: "export"/);
   assert.match(nextConfig, /basePath/);
   assert.match(pagesWorkflow, /actions\/deploy-pages@v5/);

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:pages": "GITHUB_PAGES=true next build",
+    "build:pages": "GITHUB_PAGES=true SITE_URL=https://oukeming64-tech.github.io/trs-future-site/ next build",
     "build:handoff": "SITE_URL=https://www.trs.com.cn/ next build",
     "manifest:handoff": "node scripts/write-handoff-manifest.mjs",
     "assemble:handoff": "node scripts/assemble-handoff-package.mjs",
