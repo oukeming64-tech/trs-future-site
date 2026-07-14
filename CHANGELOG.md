@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.0 — 2026-07-14
+
+- 新增面向普通维护者的 `docs/EDITING-GUIDE.md`，按修改目标列出模块位置、改法、检查与发布流程。
+- 新增面向自动化 Agent 的 `AGENTS.md`，明确模块所有权、3D 映射契约、资源路径、必跑检查与文档同步边界。
+- README 增加人类与 Agent 维护入口，并将正式在线地址切换为 GitHub Pages。
+- 将运行时构建链收敛为 Next.js 静态导出，移除 Sites、vinext Worker、Vite 与 Cloudflare 专用配置及依赖。
+- 新增 GitHub Actions 自动部署；`main` 更新后生成 `/trs-future-site/` 子路径产物并发布到 GitHub Pages。
+- 将自动测试改为核验静态 HTML、Pages 基础路径和全部本地资源是否真实存在。
+
 ## 1.2.0 — 2026-07-14
 
 - 完成中科闻歌官网与 v1.1 的结构、内容、视觉和转化路径对比，并记录融合筛选与旧版/新版对跑结果。

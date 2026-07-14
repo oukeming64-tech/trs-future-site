@@ -1,34 +1,11 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
+const outputDirectory = new URL("../out/", import.meta.url);
 
-  return worker.fetch(
-    new Request("http://localhost/", {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
-}
-
-test("server-renders the TRS concept site", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-
-  const html = await response.text();
+test("exports the TRS concept site for GitHub Pages", async () => {
+  const html = await readFile(new URL("index.html", outputDirectory), "utf8");
   assert.match(html, /<title>拓尔思 TRS｜让数据成为可行动的智能<\/title>/i);
   assert.match(html, /让数据成为/);
   assert.match(html, /可行动的智能/);
@@ -38,7 +15,20 @@ test("server-renders the TRS concept site", async () => {
   assert.match(html, /业务结果/);
   assert.match(html, /FACT CHECK \/ PRIMARY SOURCES/);
   assert.match(html, /2026\.07\.07/);
+  assert.match(html, /\/trs-future-site\/_next\/static\//);
+  assert.match(html, /\/trs-future-site\/trs-logo\.png/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
+
+  const localAssets = [
+    ...html.matchAll(/(?:href|src)="\/trs-future-site\/([^"?#]+)"/g),
+  ].map((match) => match[1]);
+
+  assert.ok(localAssets.length > 0);
+  await Promise.all(
+    [...new Set(localAssets)].map((asset) =>
+      access(new URL(asset, outputDirectory)),
+    ),
+  );
 });
 
 test("keeps content, sections, and interactive visuals separated", async () => {
@@ -56,6 +46,8 @@ test("keeps content, sections, and interactive visuals separated", async () => {
     miniCss,
     css,
     packageJson,
+    nextConfig,
+    pagesWorkflow,
   ] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/site-content.ts", import.meta.url), "utf8"),
@@ -94,6 +86,11 @@ test("keeps content, sections, and interactive visuals separated", async () => {
     readFile(new URL("../app/mini-3d.css", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+    readFile(
+      new URL("../.github/workflows/pages.yml", import.meta.url),
+      "utf8",
+    ),
   ]);
 
   const contentVisuals = [
@@ -120,7 +117,7 @@ test("keeps content, sections, and interactive visuals separated", async () => {
   assert.match(industries, /industry-card__scenarios/);
   assert.match(about, /evidenceLinks/);
   assert.match(hero, /<Mini3DScene/);
-  assert.match(brand, /src="\/trs-logo\.png"/);
+  assert.match(brand, /NEXT_PUBLIC_BASE_PATH/);
   assert.equal(contentVisuals.length, 35);
   assert.equal(new Set(contentVisuals).size, 35);
   assert.equal(productOutcomes.length, 24);
@@ -137,4 +134,10 @@ test("keeps content, sections, and interactive visuals separated", async () => {
   assert.match(miniCss, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+  assert.doesNotMatch(packageJson, /vinext|wrangler|@cloudflare\/vite-plugin/);
+  assert.match(packageJson, /build:pages/);
+  assert.match(nextConfig, /output: "export"/);
+  assert.match(nextConfig, /basePath/);
+  assert.match(pagesWorkflow, /actions\/deploy-pages@v5/);
+  assert.match(pagesWorkflow, /npm run build:pages/);
 });
