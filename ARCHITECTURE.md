@@ -110,7 +110,7 @@ static HTML + interactive client islands
 - `npm run build` 生成普通静态导出；`npm run build:pages` 以 `/trs-future-site/` 为基础路径生成 GitHub Pages 预览产物。
 - `npm run package:handoff` 生成官网根路径产物，把正式域名写入元数据，并封装为 `handoff-package/site/`、随包指南、版本清单和 SHA-256 校验值。
 - `next.config.ts` 在 Pages 构建时写入 `NEXT_PUBLIC_BASE_PATH`，供 Logo 等 `public/` 资源使用。
-- `app/layout.tsx` 从 `SITE_URL` 读取目标站点地址；未设置时使用 GitHub Pages 预览地址，终稿构建则显式写入正式域名。
+- `app/layout.tsx` 从 `SITE_URL` 读取目标站点地址；`build:pages` 显式写入 GitHub Pages 预览地址，终稿构建显式写入正式域名，未设置时也安全回退到预览地址。
 - `.github/workflows/pages.yml` 监听 `main`，安装依赖、生成 `out/`、上传静态产物并部署 GitHub Pages 预览。
 - `.github/workflows/handoff.yml` 仅允许人工触发。它验证两种构建目标后上传终稿包，但不接触正式服务器。
 - 仓库不再保留 Sites、vinext Worker 或 Cloudflare 运行时配置。
